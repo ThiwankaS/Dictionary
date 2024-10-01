@@ -40,7 +40,7 @@ t_num_data *open_directory(FILE *directory, char *directory_name)
     {
         return ((t_num_data *)0);
     }
-    data = loading_data(directory);
+    data = loading_data(directory, directory_name);
     return (data);
 }
 
