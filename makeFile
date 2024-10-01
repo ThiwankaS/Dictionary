@@ -1,17 +1,18 @@
-CFILES = srcs/ft_putchar.c srcs/ft_putstr.c srcs/ft_strcmp.c srcs/ft_strlen.c srcs/ft_swap.c
+CFILES = srcs/data.c srcs/digit.c srcs/main.c
 INCLUDES = includes
 OFILES = ${CFILES:.c=.o}
-NAME = libft.a
-FLAGS = -Wall -Wextra -Werror
+NAME = ft_number
+FLAGS = -Wall -Wextra -Werror -g -fsanitize=address,undefined
 CMD = cc
-
-all : ${NAME}
 
 .c.o :
 		${CMD} ${FLAGS} -c $< -o ${<:.c=.o} -I ${INCLUDES}
 
 ${NAME} : ${OFILES}
-			ar rcs ${NAME} ${OFILES}
+		${CMD} ${FLAGS} ${OFILES} -o ${NAME}
+
+
+all : ${NAME}
 
 clean :
 		rm -f ${OFILES}

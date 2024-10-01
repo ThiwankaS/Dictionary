@@ -1,23 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "ft_number.h"
-
-int ft_strlen(char *str)
-{
-    int count;
-
-    count = 0;
-    while (str[count] != '\0')
-        count++;
-    return (count);
-}
 
 t_digit *loading_digits(char *input_number)
 {
     int length;
     int iterator;
 
-    length = ft_strlen(input_number);
+    length = strlen(input_number);
     t_digit *digits = (t_digit *)malloc((length + 1) * sizeof(t_digit));
     iterator = 0;
     while (iterator < length)

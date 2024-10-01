@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 {
     char *input_number;
     char *directory_name;
-    FILE *directory;
+    FILE *directory = NULL;
 
     if (argc == 2)
     {
@@ -22,6 +22,11 @@ int main(int argc, char *argv[])
         directory_name = argv[2];
         input_number = argv[1];
         print_number(directory, directory_name, input_number);
+    }
+    else
+    {
+        printf("Error! Mismatch argument count!\n");
+        return (0);
     }
     return (0);
 }
@@ -43,7 +48,7 @@ void print_number(FILE *directory, char *directory_name, char *input_number)
 {
     t_num_data *data;
     t_digit *digits;
-    char *result;
+    char *result = NULL;
 
     data = open_directory(directory, directory_name);
     digits = loading_digits(input_number);
@@ -52,7 +57,7 @@ void print_number(FILE *directory, char *directory_name, char *input_number)
 
 char *final_numeral(t_num_data *data, t_digit *digits, char *result)
 {
-    char *str1;
+    char *str1 = NULL;
     if (digits[0].length > 3)
     {
     }
@@ -64,7 +69,7 @@ char *final_numeral(t_num_data *data, t_digit *digits, char *result)
 char *three_digit_number(t_num_data *data, t_digit *digits, char *result)
 {
     int i = 0;
-    char *str1;
+    char *str1 = NULL;
     char *str2;
     char *str3;
     char *str4;

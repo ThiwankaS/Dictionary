@@ -5,7 +5,7 @@
 
 #define END 0
 #define MID 1
-#define BUFFER_SIZE 40
+#define BUFFER_SIZE 41
 
 typedef struct NumeralsData
 {
@@ -26,7 +26,9 @@ typedef struct Digit
 char *ft_only_alpha(char *str);
 char *ft_only_number(char *str);
 
-t_num_data *loading_data(FILE *directory);
 t_digit *loading_digits(char *input_number);
+t_num_data *loading_data(FILE *directory, char *directory_name);
+
+void print_number(char *input_number, char *directory_name, FILE *directory);
 
 #endif
