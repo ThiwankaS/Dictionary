@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "ft_number.h"
 
 int main(int argc, char *argv[])
@@ -32,19 +33,27 @@ void print_number(char *input_number, char *directory_name, FILE *directory)
 {
     t_digit *number = loading_digits(input_number);
     t_num_data *data = loading_data(directory, directory_name);
-    int i = 0, j = 0;
-    while (number[i].book_mark != END)
+    int length = strlen(input_number);
+    if (length == 1)
     {
-        printf("number : %c | index : %d | length : %d | book mark : %d \n", number[i].nbr, number[i].index, number[i].length, number[i].book_mark);
-        i++;
+        char *result = single_digit(data, number);
+        printf("%s\n", result);
     }
-    printf("\n");
-    while (data[j].book_mark != END)
-    {
-        printf("number : %s | numeral : %s | length : %d | book mark : %d \n", data[j].number, data[j].numeral, data[j].length_number, data[j].book_mark);
-        j++;
-    }
-    printf("\n");
     free(number);
     free(data);
+}
+
+char *single_digit(t_num_data *data, t_digit *number)
+{
+    int i = 0;
+
+    while (data[i].book_mark == MID)
+    {
+        if (number[0].nbr == data[i].number[0])
+        {
+            return (data[i].numeral);
+        }
+        i++;
+    }
+    return (NULL);
 }
