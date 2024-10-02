@@ -26,6 +26,7 @@ typedef struct Digit
 char *ft_only_alpha(char *str);
 char *ft_only_number(char *str);
 char *single_digit(t_num_data *data, t_digit *number);
+char *double_digit(t_num_data *data, t_digit *number);
 
 t_digit *loading_digits(char *input_number);
 t_num_data *loading_data(FILE *directory, char *directory_name);
