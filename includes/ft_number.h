@@ -15,20 +15,16 @@ typedef struct NumeralsData
     int book_mark;
 } t_num_data;
 
-typedef struct Digit
-{
-    char nbr;
-    int index;
-    int length;
-    int book_mark;
-} t_digit;
+int ft_strlen(char *str);
 
 char *ft_only_alpha(char *str);
 char *ft_only_number(char *str);
-char *single_digit(t_num_data *data, t_digit *number);
-char *double_digit(t_num_data *data, t_digit *number);
+char *get_suffix(t_num_data *data, int length);
+char *single_digit(t_num_data *data, char *number, int index);
+char *double_digit(t_num_data *data, char *number, int index);
+char *triple_digit(t_num_data *data, char *number, int index);
 
-t_digit *loading_digits(char *input_number);
+char *loading_digits(char *input_number);
 t_num_data *loading_data(FILE *directory, char *directory_name);
 
 void print_number(char *input_number, char *directory_name, FILE *directory);

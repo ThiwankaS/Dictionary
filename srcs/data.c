@@ -13,7 +13,7 @@ char *ft_only_number(char *str)
 
     count = 0;
     iterator = 0;
-    result = (char *)malloc(size * sizeof(char));
+    result = (char *)calloc(size, sizeof(char));
     while (*(str + iterator))
     {
         if (isdigit(str[iterator]))
@@ -23,7 +23,7 @@ char *ft_only_number(char *str)
         }
         iterator++;
     }
-    result[iterator] = '\0';
+    str[iterator] = '\0';
     return (result);
 }
 
@@ -36,7 +36,7 @@ char *ft_only_alpha(char *str)
 
     count = 0;
     iterator = 0;
-    result = (char *)malloc(size * sizeof(char));
+    result = (char *)calloc(size, sizeof(char));
     while (*(str + iterator))
     {
         if (isalpha(str[iterator]))
@@ -70,10 +70,18 @@ t_num_data *loading_data(FILE *directory, char *directory_name)
     {
         data[iterator].number = ft_only_number(number);
         data[iterator].numeral = ft_only_alpha(spelling);
-        data[iterator].length_number = strlen(data[iterator].number);
+        data[iterator].length_number = ft_strlen(data[iterator].number);
         data[iterator].book_mark = MID;
         iterator++;
     }
     data[iterator].book_mark = END;
     return (data);
+}
+
+int ft_strlen(char *str)
+{
+    int count = 0;
+    while (*(str + count))
+        count++;
+    return count;
 }
