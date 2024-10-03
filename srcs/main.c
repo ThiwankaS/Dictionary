@@ -42,13 +42,22 @@ void print_number(char *input_number, char *directory_name, FILE *directory)
     }
     if (length == 2)
     {
-        result = double_digit(data, number, 1);
+        result = double_digit(data, number, 0);
         printf("%s\n", result);
     }
     if (length == 3)
     {
-        result = triple_digit(data, number, 2);
+        result = triple_digit(data, number, 0);
         printf("%s\n", result);
+    }
+    if (length > 3)
+    {
+        result = complex_digit(data, number, length);
+        printf("%s\n", result);
+    }
+    for (int i = 0; i < length; i++)
+    {
+        printf("Number [%d] : %c\n", i, input_number[i]);
     }
 
     free(result);
@@ -79,15 +88,15 @@ char *double_digit(t_num_data *data, char *number, int index)
     while (data[i].book_mark == MID)
     {
         // For all the other numbers XX excluding above paterns
-        if (number[index - 1] != '1' && number[index] != '0')
+        if (number[index] != '1' && number[index + 1] != '0')
         {
-            if (number[index - 1] == data[i].number[0] && data[i].number[1] == '0')
+            if (number[index] == data[i].number[0] && data[i].number[1] == '0')
             {
                 str = strcpy(str, data[i].numeral);
                 str = strcat(str, " ");
                 while (data[j].book_mark == MID)
                 {
-                    if (number[index] == data[j].number[0])
+                    if (number[index + 1] == data[j].number[0])
                     {
                         str = strcat(str, data[j].numeral);
                         return str;
@@ -97,19 +106,19 @@ char *double_digit(t_num_data *data, char *number, int index)
             }
         }
         // For numbers X0 excluding 10
-        if (number[index] == '0' && number[index - 1] != '1' && number[index - 1] == data[i].number[0] && number[index] == data[i].number[1])
+        if (number[index + 1] == '0' && number[index] != '1' && number[index] == data[i].number[0] && number[index + 1] == data[i].number[1])
         {
             str = strcpy(str, data[i].numeral);
             return str;
         }
         // For numbers 1X
-        if (number[index - 1] == '1' && number[index - 1] == data[i].number[0] && number[index] == data[i].number[1])
+        if (number[index] == '1' && number[index] == data[i].number[0] && number[index + 1] == data[i].number[1])
         {
             str = strcpy(str, data[i].numeral);
             return str;
         }
         // For numbers 0X
-        if (number[index - 1] == '0' && number[index] == data[i].number[0])
+        if (number[index] == '0' && number[index + 1] == data[i].number[0])
         {
             str = strcpy(str, data[i].numeral);
             return str;
@@ -122,14 +131,14 @@ char *double_digit(t_num_data *data, char *number, int index)
 char *triple_digit(t_num_data *data, char *number, int index)
 {
     char *str = calloc(1024, sizeof(char));
-    if (number[0] == '0')
+    if (number[index] == '0')
     {
-        if (number[1] == '0')
+        if (number[index + 1] == '0')
         {
-            str = strcpy(str, single_digit(data, number, index));
+            str = strcpy(str, single_digit(data, number, index + 2));
             return (str);
         }
-        str = strcpy(str, double_digit(data, number, index));
+        str = strcpy(str, double_digit(data, number, index + 1));
         return (str);
     }
     else
@@ -137,7 +146,7 @@ char *triple_digit(t_num_data *data, char *number, int index)
         int i = 0;
         while (data[i].book_mark == MID)
         {
-            if (number[0] == data[i].number[0] && data[i].length_number == 1)
+            if (number[index] == data[i].number[0] && data[i].length_number == 1)
             {
                 str = strcpy(str, data[i].numeral);
             }
@@ -145,26 +154,58 @@ char *triple_digit(t_num_data *data, char *number, int index)
         }
         str = strcat(str, " ");
         str = strcat(str, get_suffix(data, 3));
-        if (number[1] != '0' && number[2] != '0')
+        if (number[index + 1] == '0' && number[index + 2] == '0')
         {
-            str = strcat(str, " ");
-            str = strcat(str, double_digit(data, number, 2));
+            return (str);
         }
+        str = strcat(str, " ");
+        str = strcat(str, double_digit(data, number, index + 1));
         return (str);
     }
     return (NULL);
 }
 
-char *get_suffix(t_num_data *data, int length)
+char *complex_digit(t_num_data *data, char *number, int length)
 {
-    int i = 0;
-    while (data[i].book_mark == MID)
+    char *str = calloc(1024, sizeof(char));
+    str = strcpy(str, " ");
+    int i = 1, step = 0;
+    while (i < length)
     {
-        if (data[i].length_number == length)
+        if (i % 3 == 0)
         {
-            return data[i].numeral;
+            if (step != 0)
+            {
+                str = str_join(get_suffix(data, step + 3), str);
+            }
+            str = str_join(triple_digit(data, number, (length - i)), str);
+            step++;
         }
         i++;
     }
-    return (NULL);
+    if (i % 3 == 0)
+    {
+        if (step != 0)
+        {
+            str = str_join(get_suffix(data, step + 3), str);
+        }
+        str = str_join(triple_digit(data, number, (length - i)), str);
+    }
+    if (i % 3 == 1)
+    {
+        if (step != 0)
+        {
+            str = str_join(get_suffix(data, step + 3), str);
+        }
+        str = str_join(single_digit(data, number, (length - i)), str);
+    }
+    if (i % 3 == 2)
+    {
+        if (step != 0)
+        {
+            str = str_join(get_suffix(data, step + 3), str);
+        }
+        str = str_join(double_digit(data, number, (length - i)), str);
+    }
+    return (str);
 }

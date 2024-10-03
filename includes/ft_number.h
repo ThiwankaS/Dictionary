@@ -19,12 +19,14 @@ int ft_strlen(char *str);
 
 char *ft_only_alpha(char *str);
 char *ft_only_number(char *str);
+char *str_join(char *src1, char *src2);
+char *loading_digits(char *input_number);
 char *get_suffix(t_num_data *data, int length);
 char *single_digit(t_num_data *data, char *number, int index);
 char *double_digit(t_num_data *data, char *number, int index);
 char *triple_digit(t_num_data *data, char *number, int index);
+char *complex_digit(t_num_data *data, char *number, int length);
 
-char *loading_digits(char *input_number);
 t_num_data *loading_data(FILE *directory, char *directory_name);
 
 void print_number(char *input_number, char *directory_name, FILE *directory);
