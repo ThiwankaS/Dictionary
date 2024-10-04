@@ -170,6 +170,7 @@ char *complex_digit(t_num_data *data, char *number, int length)
     char *str = calloc(1024, sizeof(char));
     str = strcpy(str, " ");
     int i = 1, step = 0;
+
     while (i < length)
     {
         if (i % 3 == 0)
@@ -178,8 +179,15 @@ char *complex_digit(t_num_data *data, char *number, int length)
             {
                 str = str_join(get_suffix(data, step + 3), str);
             }
-            str = str_join(triple_digit(data, number, (length - i)), str);
-            step++;
+            if (number[length - i] == '0' && number[length - i + 1] == '0' && number[length - i + 2] == '0')
+            {
+                step++;
+            }
+            else
+            {
+                str = str_join(triple_digit(data, number, (length - i)), str);
+                step++;
+            }
         }
         i++;
     }
