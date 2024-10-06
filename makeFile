@@ -1,4 +1,4 @@
-CFILES = srcs/data.c srcs/digit.c srcs/main.c
+CFILES = srcs/data.c srcs/digit.c srcs/main.c srcs/util.c
 INCLUDES = includes
 OFILES = ${CFILES:.c=.o}
 NAME = ft_number
