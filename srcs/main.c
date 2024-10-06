@@ -169,16 +169,16 @@ char *complex_digit(t_num_data *data, char *number, int length)
     {
         if (i % 3 == 0)
         {
-            if (step != 0)
-            {
-                str = str_join(get_suffix(data, 1 + step * 3), str);
-            }
             if (number[length - i] == '0' && number[length - i + 1] == '0' && number[length - i + 2] == '0')
             {
                 step++;
             }
             else
             {
+                if (step != 0)
+                {
+                    str = str_join(get_suffix(data, 1 + step * 3), str);
+                }
                 str = str_join(triple_digit(data, number, (length - i)), str);
                 step++;
             }
