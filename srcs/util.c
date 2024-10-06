@@ -22,7 +22,7 @@ char *str_join(char *src1, char *src2)
     int size = strlen(src1) + strlen(src2) + 2;
     char *result = calloc(size, sizeof(char));
     int i = 0, j = 0;
-    while (i < size && *(src1 + i))
+    while (i < size && src1[i] != '\0')
     {
         result[i] = src1[i];
         i++;

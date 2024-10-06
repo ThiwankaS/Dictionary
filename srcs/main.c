@@ -55,10 +55,6 @@ void print_number(char *input_number, char *directory_name, FILE *directory)
         result = complex_digit(data, number, length);
         printf("%s\n", result);
     }
-    for (int i = 0; i < length; i++)
-    {
-        printf("Number [%d] : %c\n", i, input_number[i]);
-    }
 
     free(result);
     free(number);
@@ -168,16 +164,14 @@ char *triple_digit(t_num_data *data, char *number, int index)
 char *complex_digit(t_num_data *data, char *number, int length)
 {
     char *str = calloc(1024, sizeof(char));
-    str = strcpy(str, " ");
     int i = 1, step = 0;
-
     while (i < length)
     {
         if (i % 3 == 0)
         {
             if (step != 0)
             {
-                str = str_join(get_suffix(data, step + 3), str);
+                str = str_join(get_suffix(data, 1 + step * 3), str);
             }
             if (number[length - i] == '0' && number[length - i + 1] == '0' && number[length - i + 2] == '0')
             {
@@ -195,7 +189,7 @@ char *complex_digit(t_num_data *data, char *number, int length)
     {
         if (step != 0)
         {
-            str = str_join(get_suffix(data, step + 3), str);
+            str = str_join(get_suffix(data, (1 + step * 3)), str);
         }
         str = str_join(triple_digit(data, number, (length - i)), str);
     }
@@ -203,7 +197,7 @@ char *complex_digit(t_num_data *data, char *number, int length)
     {
         if (step != 0)
         {
-            str = str_join(get_suffix(data, step + 3), str);
+            str = str_join(get_suffix(data, (1 + step * 3)), str);
         }
         str = str_join(single_digit(data, number, (length - i)), str);
     }
@@ -211,7 +205,7 @@ char *complex_digit(t_num_data *data, char *number, int length)
     {
         if (step != 0)
         {
-            str = str_join(get_suffix(data, step + 3), str);
+            str = str_join(get_suffix(data, (1 + step * 3)), str);
         }
         str = str_join(double_digit(data, number, (length - i)), str);
     }
